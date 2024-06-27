@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Client" representedClassName="Client" syncable="YES" codeGenerationType="class">
+        <attribute name="clientNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="inspections" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject"/>
+        <relationship name="payments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="payer" inverseEntity="Payment"/>
+        <relationship name="registeredBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="registers" inverseEntity="Employee"/>
+        <relationship name="registrations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="registeredBy" inverseEntity="RentalObject"/>
+        <relationship name="views" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="inspectedBy" inverseEntity="RentalObject"/>
+    </entity>
+    <entity name="Employee" representedClassName="Employee" syncable="YES" codeGenerationType="class">
+        <attribute name="addToRegisters" optional="YES" attributeType="String"/>
+        <attribute name="employeeNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="String"/>
+        <attribute name="salary" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="registers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="registeredBy" inverseEntity="Client"/>
+        <relationship name="responsibleFor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="responsibleEmployee" inverseEntity="RentalObject"/>
+    </entity>
+    <entity name="Object" representedClassName="Object" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ownerID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Owner" representedClassName="Owner" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="contactInfo" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ownerNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="ownedObjects" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="owner" inverseEntity="RentalObject"/>
+        <relationship name="owns" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="ownedBy" inverseEntity="RentalObject"/>
+    </entity>
+    <entity name="Payment" representedClassName="Payment" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="depositCard" optional="YES" attributeType="String"/>
+        <attribute name="endPayment" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="paymentMethod" optional="YES" attributeType="String"/>
+        <attribute name="paymentNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startPayment" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="forObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="payments" inverseEntity="RentalObject"/>
+        <relationship name="paidBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client"/>
+        <relationship name="payer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="payments" inverseEntity="Client"/>
+        <relationship name="rentalObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject"/>
+    </entity>
+    <entity name="RentalObject" representedClassName="RentalObject" syncable="YES" codeGenerationType="class">
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="numberOfRooms" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="objectNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="postalCode" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="street" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="inspectedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="views" inverseEntity="Client"/>
+        <relationship name="ownedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Owner" inverseName="owns" inverseEntity="Owner"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Owner" inverseName="ownedObjects" inverseEntity="Owner"/>
+        <relationship name="paidBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment"/>
+        <relationship name="payments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="forObject" inverseEntity="Payment"/>
+        <relationship name="registeredBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="registrations" inverseEntity="Client"/>
+        <relationship name="requests" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Request" inverseName="rentalObject" inverseEntity="Request"/>
+        <relationship name="responsibleEmployee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="responsibleFor" inverseEntity="Employee"/>
+    </entity>
+    <entity name="Request" representedClassName="Request" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="details" optional="YES" attributeType="String"/>
+        <attribute name="requestDescription" optional="YES" attributeType="String"/>
+        <relationship name="rentalObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RentalObject" inverseName="requests" inverseEntity="RentalObject"/>
+        <relationship name="requestedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client"/>
+    </entity>
+</model>
